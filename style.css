@@ -17,6 +17,8 @@
     width: 120px;
     height: 25px;
     background-color: green;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 .ball{
@@ -24,5 +26,5 @@
     width: 40px;
     height: 40px;
     border-radius: 20px;
-    background-color: olive;
+    background-color: rgb(4, 0, 128);
 }

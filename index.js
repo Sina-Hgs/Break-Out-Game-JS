@@ -2,16 +2,12 @@
 const container = document.querySelector(".container");
 const blockWidth = 120;
 const blockHeight = 25;
-const score = document.querySelector("#score");
+const scoreDisplay = document.querySelector("#score");
+let score = 0;
 // the gap between the blocks in one row:
 const gapRow = 10;
 //the gap between the blocks in one column
 const gapColumn = 20;
-
-let bottomLeft = [];
-let bottomRight = [];
-let topLeft = [];
-let topRight = [];
 
 //making the containerWidth and containerHeight global variables
 //so I can use them way later.
@@ -34,6 +30,7 @@ const medium = 4;
 const godMode = 9;
 
 let blockList = [];
+
 //a function that makes a number of blocks
 //based on the difficulty of the game.
 function listBlocks(diffculty) {
@@ -60,7 +57,7 @@ function listBlocks(diffculty) {
     }
   }
 }
-listBlocks(medium);
+listBlocks(easy);
 
 // making a function that makes the blocks.
 function addBlocks() {
@@ -129,7 +126,10 @@ const ball = document.createElement("div");
 ball.classList.add("ball");
 container.appendChild(ball);
 
-const ballStart = [containerWidth / 2 - 20, 40];
+let middlePoint = containerWidth / 2;
+
+const ballStart = [middlePoint - 20, 40];
+
 let ballCurrentPosition = ballStart;
 
 function drawball() {
@@ -149,9 +149,10 @@ function moveBall() {
   ballCurrentPosition[1] += yDirection;
   drawball();
   collisions();
+  // console.log(ballCurrentPosition);
 }
 
-let timer = setInterval(moveBall, 10);
+let timer = setInterval(moveBall, 20);
 
 //collisions
 
@@ -160,12 +161,13 @@ function collisions() {
   for (let i = 0; i < blockList.length; i++) {
     if (
       ballCurrentPosition[0] > blockList[i].bottomLeft[0] &&
-      ballCurrentPosition[0] < blockList[i].bottomLeft[0] + blockWidth &&
-      ballCurrentPosition[1] + 40 > blockList[i].bottomLeft[1] &&
-      ballCurrentPosition[1] < blockList[i].bottomLeft[1] + blockHeight
+      ballCurrentPosition[0] < blockList[i].bottomRight[0] &&
+      ballCurrentPosition[1] + 60 >
+        containerHeight - blockList[i].bottomLeft[1] &&
+      ballCurrentPosition[1] < containerHeight - blockList[i].topLeft[1]
     ) {
-      console.log(blockList);
-      console.log("hi");
+      const allBlocks = Array.from(document.querySelectorAll(".block"));
+      allBlocks[i].classList.remove("block");
       blockList.splice(i, 1);
       changeDirection();
     }
@@ -189,12 +191,19 @@ function collisions() {
     ballCurrentPosition[1] < currentPosition[1] + blockHeight
   ) {
     changeDirection();
+    score++;
+    scoreDisplay.innerHTML = score;
+    if (blockList.length == 0) {
+      score.innerHTML = "You Win!";
+      clearInterval(timerId);
+      document.removeEventListener("keydown", moveUser);
+    }
   }
 
   //checking for game over
   if (ballCurrentPosition[1] == 0) {
     clearInterval(timer);
-    score.innerHTML = "You lose!";
+    scoreDisplay.innerHTML = "You lose!";
     document.removeEventListener("keydown", moveUser);
   }
 }
