@@ -149,7 +149,6 @@ function moveBall() {
   ballCurrentPosition[1] += yDirection;
   drawball();
   collisions();
-  // console.log(ballCurrentPosition);
 }
 
 let timer = setInterval(moveBall, 20);
