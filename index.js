@@ -169,6 +169,13 @@ function collisions() {
       allBlocks[i].classList.remove("block");
       blockList.splice(i, 1);
       changeDirection();
+      score++;
+      scoreDisplay.innerHTML = score;
+      if (blockList.length == 0) {
+        scoreDisplay.innerHTML = "You Win!";
+        clearInterval(timer);
+        document.removeEventListener("keydown", moveUser);
+      }
     }
   }
 
@@ -184,19 +191,12 @@ function collisions() {
 
   //checking for user collision
   if (
-    ballCurrentPosition[0] > currentPosition[0] &&
-    ballCurrentPosition[0] < currentPosition[0] + blockWidth &&
-    ballCurrentPosition[1] > currentPosition[1] &&
-    ballCurrentPosition[1] < currentPosition[1] + blockHeight
+    ballCurrentPosition[0] >= currentPosition[0] &&
+    ballCurrentPosition[0] <= currentPosition[0] + blockWidth &&
+    ballCurrentPosition[1] >= currentPosition[1] &&
+    ballCurrentPosition[1] <= currentPosition[1] + blockHeight
   ) {
     changeDirection();
-    score++;
-    scoreDisplay.innerHTML = score;
-    if (blockList.length == 0) {
-      score.innerHTML = "You Win!";
-      clearInterval(timerId);
-      document.removeEventListener("keydown", moveUser);
-    }
   }
 
   //checking for game over
