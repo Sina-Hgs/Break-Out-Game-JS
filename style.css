@@ -1,11 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 .container{
+    background-color: rgb(250, 250, 250);
     position: relative;
-    border-style: solid;
-    border-width: 20px;
-    border-color: rgb(255, 126, 163);
-    box-shadow: 1px 1px 10px rgb(193, 193, 193);
+    outline: solid white;
+    outline-offset: 1rem;
     margin: auto; 
     margin-top:3rem;
+    box-shadow: 1px 1px 100px rgba(255, 255, 255, 0.583);
 }
 
 .block{
@@ -19,7 +21,7 @@
     position: absolute;
     width: 120px;
     height: 25px;
-    background-color: rgb(255, 119, 0);
+    background-color: #a41ad7;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 }
@@ -29,18 +31,40 @@
     width: 40px;
     height: 40px;
     border-radius: 20px;
-    background-color: rgb(237, 70, 92);
+    background-color: #14bb81;
 }
 
 body{
-    background: rgb(239, 157, 168);
-    background: linear-gradient(90deg, rgb(139, 185, 248) 10%, rgba(255, 220, 224, 1) 50%);
+    background: linear-gradient(270deg, #01aa0f, #14b93f, #14bb81, #1486bb, #2622df, #a41ad7, #bf1b7f, #bb1236);
+    background-size: 300% 300%;
+    animation: gradient 30s ease infinite;
     margin-top: 1rem;
     text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    color:rgb(30, 94, 231);
-    text-shadow: 1px 1px 60px rgb(14, 86, 158);
-    text-decoration: underline rgb(112, 182, 239);
+    font-family: 'Bebas Neue', cursive;
+    color:white;
+    text-shadow: 1px 1px 60px rgb(0, 5, 10);
+}
+
+h1{
+    padding: 1rem;
+    border: solid rgb(255, 255, 255);
+    font-weight: 300;
+    border-radius: 70px;
+    box-shadow: 1px 1px 25px rgba(197, 193, 193, 0.583);
+}
+
+@keyframes gradient {
+    0% {
+            background-position: 0% 50%
+        }
+    
+        50% {
+            background-position: 100% 50%
+        }
+    
+        100% {
+            background-position: 0% 50%
+        }
 }
 
 #score{
