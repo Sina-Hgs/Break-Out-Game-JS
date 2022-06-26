@@ -2,23 +2,24 @@
     position: relative;
     border-style: solid;
     border-width: 20px;
-    border-color: darkblue;
-    margin: auto;
-    
+    border-color: rgb(255, 126, 163);
+    box-shadow: 1px 1px 10px rgb(193, 193, 193);
+    margin: auto; 
+    margin-top:3rem;
 }
 
 .block{
     position:absolute;
     width: 120px;
     height: 25px;
-    background-color: red;
+    background-color: rgb(28, 92, 170);
 }
 
 .user {
     position: absolute;
     width: 120px;
     height: 25px;
-    background-color: green;
+    background-color: rgb(255, 119, 0);
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 }
@@ -28,5 +29,23 @@
     width: 40px;
     height: 40px;
     border-radius: 20px;
-    background-color: rgb(4, 0, 128);
+    background-color: rgb(237, 70, 92);
+}
+
+body{
+    background: rgb(239, 157, 168);
+    background: linear-gradient(90deg, rgb(139, 185, 248) 10%, rgba(255, 220, 224, 1) 50%);
+    margin-top: 1rem;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    color:rgb(30, 94, 231);
+    text-shadow: 1px 1px 60px rgb(14, 86, 158);
+    text-decoration: underline rgb(112, 182, 239);
+}
+
+#score{
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 32px;
+    font-weight: 500;
 }

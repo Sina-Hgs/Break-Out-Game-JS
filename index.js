@@ -57,7 +57,7 @@ function listBlocks(diffculty) {
     }
   }
 }
-listBlocks(easy);
+listBlocks(medium);
 
 // making a function that makes the blocks.
 function addBlocks() {
