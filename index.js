@@ -4,15 +4,39 @@ const blockWidth = 120;
 const blockHeight = 25;
 const scoreDisplay = document.querySelector("#score");
 let score = 0;
+// getting the buttons
+const buttons = document.querySelectorAll("button");
+const easyLevel = document.querySelector("#easy-btn");
+const mediumLevel = document.querySelector("#medium-btn");
+const godModeLevel = document.querySelector("#godMode-btn");
+
+//setting the number of rows/columns for each difficulty
+const easy = 3;
+const medium = 4;
+const godMode = 9;
+
 // the gap between the blocks in one row:
 const gapRow = 10;
 //the gap between the blocks in one column
 const gapColumn = 20;
 
-//making the containerWidth and containerHeight global variables
-//so I can use them way later.
-let containerWidth = 0;
-let containerHeight = 0;
+//defining these variables as global variables so I can use the later in functions.
+let containerWidth;
+let containerHeight;
+
+let blockList = [];
+
+let user;
+let userStart;
+let currentPosition;
+
+let ballStart;
+let ballCurrentPosition;
+
+let xDirection = 2;
+let yDirection = 2;
+
+let timer;
 
 //creating a class which gives the block coordinates.
 class Block {
@@ -24,17 +48,10 @@ class Block {
   }
 }
 
-//setting the number of rows/columns for each difficulty
-const easy = 3;
-const medium = 4;
-const godMode = 9;
-
-let blockList = [];
-
 //a function that makes a number of blocks
 //based on the difficulty of the game.
 function listBlocks(diffculty) {
-  //blocks in one row will have a gap of 10px betwee eachother
+  //blocks in one row will have a gap of 10px between eachother
   //so the next block needs to shift in the x coordinates
   //by the width of the previous block + gap
   let xShift = blockWidth + gapRow;
@@ -56,10 +73,58 @@ function listBlocks(diffculty) {
       blockList.push(new Block(10 + j * xShift, 10 + k * yShift));
     }
   }
-}
-listBlocks(easy);
 
-// making a function that makes the blocks.
+  //user's start coordinates.
+  userStart = [containerWidth / 2 - blockWidth / 2, 10];
+  //the variable that's tracked for user's location.
+  currentPosition = userStart;
+
+  ballStart = [containerWidth / 2 - 20, 40];
+
+  ballCurrentPosition = ballStart;
+
+  addBlocks();
+  addUser();
+
+  document.addEventListener("keydown", moveUser);
+
+  // adding the ball to the html file
+  const ball = document.createElement("div");
+  ball.classList.add("ball");
+  container.appendChild(ball);
+
+  //add Ball
+  function addBall() {
+    ball.style.left = ballCurrentPosition[0];
+    ball.style.bottom = ballCurrentPosition[1];
+  }
+
+  //making the ball move
+  function moveBall() {
+    ballCurrentPosition[0] += xDirection;
+    ballCurrentPosition[1] += yDirection;
+    addBall();
+    collisions();
+  }
+
+  timer = setInterval(moveBall, 25);
+}
+
+// Event Listeners for the buttons
+easyLevel.addEventListener("click", () => {
+  listBlocks(easy);
+  buttons.forEach((button) => (button.style.display = "none"));
+});
+mediumLevel.addEventListener("click", () => {
+  listBlocks(medium);
+  buttons.forEach((button) => (button.style.display = "none"));
+});
+godModeLevel.addEventListener("click", () => {
+  listBlocks(godMode);
+  buttons.forEach((button) => (button.style.display = "none"));
+});
+
+// making a function that adds the blocks.
 function addBlocks() {
   for (let i = 0; i < blockList.length; i++) {
     const block = document.createElement("div");
@@ -73,88 +138,47 @@ function addBlocks() {
     container.appendChild(block);
   }
 }
-addBlocks();
 
-//user's start coordinates.
-let userStart = [containerWidth / 2 - blockWidth / 2, 10];
-//the variable that's tracked for user's location.
-let currentPosition = userStart;
 //adding the user
-const user = document.createElement("div");
-user.classList.add("user");
-user.style.left = currentPosition[0] + "px";
-user.style.bottom = currentPosition[1] + "px";
-container.appendChild(user);
+function addUser() {
+  user = document.createElement("div");
+  user.classList.add("user");
+  user.style.left = currentPosition[0] + "px";
+  user.style.bottom = currentPosition[1] + "px";
+  container.appendChild(user);
+}
 
 //moving the user
 function moveUser(event) {
   switch (event.key) {
     case "ArrowLeft":
-      if (currentPosition[0] - gapRow > 0) {
-        currentPosition[0] -= 30;
+      if (currentPosition[0] - gapColumn > 0) {
+        currentPosition[0] -= 20;
         user.style.left = currentPosition[0] + "px";
-        user.style.bottom = currentPosition[1] + "px";
       }
       break;
     case "ArrowRight":
-      if (currentPosition[0] + blockWidth + gapRow < containerWidth) {
-        currentPosition[0] += 30;
+      if (currentPosition[0] + blockWidth + gapColumn < containerWidth) {
+        currentPosition[0] += 20;
         user.style.left = currentPosition[0] + "px";
-        user.style.bottom = currentPosition[1] + "px";
       }
       break;
     case "ArrowUp":
       if (currentPosition[1] < 80) {
-        currentPosition[1] += 30;
-        user.style.left = currentPosition[0] + "px";
+        currentPosition[1] += 20;
         user.style.bottom = currentPosition[1] + "px";
       }
       break;
     case "ArrowDown":
       if (currentPosition[1] > 10) {
-        currentPosition[1] -= 30;
-        user.style.left = currentPosition[0] + "px";
+        currentPosition[1] -= 20;
         user.style.bottom = currentPosition[1] + "px";
       }
       break;
   }
 }
-document.addEventListener("keydown", moveUser);
-
-//add Ball
-const ball = document.createElement("div");
-ball.classList.add("ball");
-container.appendChild(ball);
-
-let middlePoint = containerWidth / 2;
-
-const ballStart = [middlePoint - 20, 40];
-
-let ballCurrentPosition = ballStart;
-
-function drawball() {
-  ball.style.left = ballCurrentPosition[0];
-  ball.style.bottom = ballCurrentPosition[1];
-}
-
-drawball();
-
-//making the ball move
-
-let xDirection = 2;
-let yDirection = 2;
-
-function moveBall() {
-  ballCurrentPosition[0] += xDirection;
-  ballCurrentPosition[1] += yDirection;
-  drawball();
-  collisions();
-}
-
-let timer = setInterval(moveBall, 20);
 
 //collisions
-
 function collisions() {
   //block collisions
   for (let i = 0; i < blockList.length; i++) {
