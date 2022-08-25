@@ -61,7 +61,7 @@ function listBlocks(diffculty) {
   let yShift = blockHeight + gapColumn;
 
   //changing the container to fit the number of
-  //blocks according to each game level.
+  //bloccontainerHeightks according to each game level.
   container.style.width = diffculty * xShift + gapRow + "px";
   container.style.height = diffculty * yShift + 10 * gapColumn;
   //setting the width and height of the container to this variables
@@ -86,7 +86,36 @@ function listBlocks(diffculty) {
   addBlocks();
   addUser();
 
-  document.addEventListener("keydown", moveUser);
+  // moving the user with arrow keys
+  document.addEventListener("keydown", moveUserKey);
+
+  // moving user with touch
+
+  document.addEventListener(
+    "touchmove",
+    (touch) => {
+      touch.preventDefault();
+      let containerMargin = window
+        .getComputedStyle(container)
+        .getPropertyValue("margin")
+        .split("px");
+      console.log(containerMargin[0]);
+      if (
+        touch.touches[0].clientX - 0.5 * blockWidth + 2 * gapColumn >
+          containerMargin[0] &&
+        touch.touches[0].clientX <
+          containerWidth + 0.5 * blockWidth - 2 * gapColumn - 25
+      ) {
+        currentPosition[0] = touch.touches[0].clientX - blockWidth;
+        user.style.left = `${currentPosition[0]}px`;
+      }
+
+      currentPosition[1] =
+        containerHeight - touch.touches[0].clientY + blockHeight;
+      user.style.bottom = `${currentPosition[1]}px`;
+    },
+    { passive: false }
+  );
 
   // adding the ball to the html file
   const ball = document.createElement("div");
@@ -143,13 +172,15 @@ function addBlocks() {
 function addUser() {
   user = document.createElement("div");
   user.classList.add("user");
+  user.style.width = blockWidth;
+  user.style.height = blockHeight;
   user.style.left = currentPosition[0] + "px";
   user.style.bottom = currentPosition[1] + "px";
   container.appendChild(user);
 }
 
-//moving the user
-function moveUser(event) {
+//moving the user with arrow keys
+function moveUserKey(event) {
   switch (event.key) {
     case "ArrowLeft":
       if (currentPosition[0] - gapColumn > 0) {
@@ -170,7 +201,7 @@ function moveUser(event) {
       }
       break;
     case "ArrowDown":
-      if (currentPosition[1] > 10) {
+      if (currentPosition[1] > 20) {
         currentPosition[1] -= 20;
         user.style.bottom = currentPosition[1] + "px";
       }
@@ -198,7 +229,7 @@ function collisions() {
       if (blockList.length == 0) {
         scoreDisplay.innerHTML = "You Win!";
         clearInterval(timer);
-        document.removeEventListener("keydown", moveUser);
+        document.removeEventListener("keydown", moveUserKey);
       }
     }
   }
@@ -227,7 +258,7 @@ function collisions() {
   if (ballCurrentPosition[1] == 0) {
     clearInterval(timer);
     scoreDisplay.innerHTML = "You lose!";
-    document.removeEventListener("keydown", moveUser);
+    document.removeEventListener("keydown", moveUserKey);
   }
 }
 

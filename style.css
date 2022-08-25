@@ -1,33 +1,36 @@
-.container{
-    position: relative;
-    border-style: solid;
-    border-width: 20px;
-    border-color: darkblue;
-    margin: auto;
-    width:200px;
-    height: 200px;
+body {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.block{
-    position:absolute;
-    width: 120px;
-    height: 25px;
-    background-color: red;
+.container {
+  position: relative;
+  border-style: solid;
+  border-width: 25px;
+  border-color: darkblue;
+  width: 200px;
+  height: 200px;
+  margin: 100px;
+}
+
+.block {
+  position: absolute;
+  width: 120px;
+  height: 25px;
+  background-color: red;
 }
 
 .user {
-    position: absolute;
-    width: 120px;
-    height: 25px;
-    background-color: green;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+  position: absolute;
+  background-color: green;
 }
 
-.ball{
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    background-color: rgb(4, 0, 128);
+.ball {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: rgb(4, 0, 128);
 }
