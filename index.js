@@ -91,7 +91,7 @@ function listBlocks(diffculty) {
 
   // moving user with touch
 
-  document.addEventListener(
+  container.addEventListener(
     "touchmove",
     (touch) => {
       touch.preventDefault();
@@ -104,15 +104,16 @@ function listBlocks(diffculty) {
         touch.touches[0].clientX - 0.5 * blockWidth + 2 * gapColumn >
           containerMargin[0] &&
         touch.touches[0].clientX <
-          containerWidth + 0.5 * blockWidth - 2 * gapColumn - 25
+          containerWidth + 0.5 * blockWidth - 2 * gapColumn - 25 &&
+        touch.touches[0].clientY > containerHeight - 80 &&
+        touch.touches[0].clientY < containerHeight + 20
       ) {
         currentPosition[0] = touch.touches[0].clientX - blockWidth;
         user.style.left = `${currentPosition[0]}px`;
+        currentPosition[1] =
+          containerHeight - touch.touches[0].clientY + blockHeight;
+        user.style.bottom = `${currentPosition[1]}px`;
       }
-
-      currentPosition[1] =
-        containerHeight - touch.touches[0].clientY + blockHeight;
-      user.style.bottom = `${currentPosition[1]}px`;
     },
     { passive: false }
   );
