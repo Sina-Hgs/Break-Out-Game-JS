@@ -11,9 +11,9 @@ const mediumLevel = document.querySelector("#medium-btn");
 const godModeLevel = document.querySelector("#godMode-btn");
 
 //setting the number of rows/columns for each difficulty
-const easy = 3;
-const medium = 4;
-const godMode = 9;
+const easy = 5;
+const medium = 7;
+const godMode = 8;
 
 // the gap between the blocks in one row:
 const gapRow = 10;
@@ -61,7 +61,7 @@ function listBlocks(diffculty) {
   let yShift = blockHeight + gapColumn;
 
   //changing the container to fit the number of
-  //blocks according to each game level.
+  //bloccontainerHeightks according to each game level.
   container.style.width = diffculty * xShift + gapRow + "px";
   container.style.height = diffculty * yShift + 10 * gapColumn;
   //setting the width and height of the container to this variables
@@ -86,7 +86,47 @@ function listBlocks(diffculty) {
   addBlocks();
   addUser();
 
-  document.addEventListener("keydown", moveUser);
+  // moving the user with arrow keys
+  document.addEventListener("keydown", moveUserKey);
+
+  // moving user with touch
+  // The eventListener is added to the container instead of the user
+  // so the player can swip anywhere inside the playground and move the user block
+  // without having to keep his finger on the user block
+  container.addEventListener(
+    "touchmove",
+    (touch) => {
+      touch.preventDefault();
+      // getting the margin around container from the css file
+      let containerMargin = window
+        .getComputedStyle(container)
+        .getPropertyValue("margin")
+        .split("px");
+
+      // making sure the user doesn't get beyond container's left and right walls
+      if (
+        touch.touches[0].clientX - 0.5 * blockWidth + 2 * gapColumn >
+          containerMargin[0] &&
+        touch.touches[0].clientX <
+          containerWidth + 0.5 * blockWidth - 2 * gapColumn - 25
+      ) {
+        currentPosition[0] = touch.touches[0].clientX - blockWidth;
+        user.style.left = `${currentPosition[0]}px`;
+      }
+
+      // making sure the user doesn't get more than 80 pixels high or
+      // below the container's floor
+      if (
+        touch.touches[0].clientY > containerHeight - 80 &&
+        touch.touches[0].clientY < containerHeight + 20
+      ) {
+        currentPosition[1] =
+          containerHeight - touch.touches[0].clientY + blockHeight;
+        user.style.bottom = `${currentPosition[1]}px`;
+      }
+    },
+    { passive: false }
+  );
 
   // adding the ball to the html file
   const ball = document.createElement("div");
@@ -107,7 +147,7 @@ function listBlocks(diffculty) {
     collisions();
   }
 
-  timer = setInterval(moveBall, 25);
+  timer = setInterval(moveBall, 15);
 }
 
 // Event Listeners for the buttons
@@ -143,13 +183,15 @@ function addBlocks() {
 function addUser() {
   user = document.createElement("div");
   user.classList.add("user");
+  user.style.width = blockWidth;
+  user.style.height = blockHeight;
   user.style.left = currentPosition[0] + "px";
   user.style.bottom = currentPosition[1] + "px";
   container.appendChild(user);
 }
 
-//moving the user
-function moveUser(event) {
+//moving the user with arrow keys
+function moveUserKey(event) {
   switch (event.key) {
     case "ArrowLeft":
       if (currentPosition[0] - gapColumn > 0) {
@@ -170,7 +212,7 @@ function moveUser(event) {
       }
       break;
     case "ArrowDown":
-      if (currentPosition[1] > 10) {
+      if (currentPosition[1] > 20) {
         currentPosition[1] -= 20;
         user.style.bottom = currentPosition[1] + "px";
       }
@@ -198,7 +240,7 @@ function collisions() {
       if (blockList.length == 0) {
         scoreDisplay.innerHTML = "You Win!";
         clearInterval(timer);
-        document.removeEventListener("keydown", moveUser);
+        document.removeEventListener("keydown", moveUserKey);
       }
     }
   }
@@ -227,7 +269,7 @@ function collisions() {
   if (ballCurrentPosition[1] == 0) {
     clearInterval(timer);
     scoreDisplay.innerHTML = "You lose!";
-    document.removeEventListener("keydown", moveUser);
+    document.removeEventListener("keydown", moveUserKey);
   }
 }
 
