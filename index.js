@@ -1,11 +1,12 @@
 //getting the container from our html file
 const container = document.querySelector(".container");
+const header = document.querySelector("#header");
 const blockWidth = 120;
 const blockHeight = 25;
 const scoreDisplay = document.querySelector("#score");
 let score = 0;
 // getting the buttons
-const buttons = document.querySelectorAll("button");
+const buttons = document.querySelector("#buttons-container");
 const easyLevel = document.querySelector("#easy-btn");
 const mediumLevel = document.querySelector("#medium-btn");
 const godModeLevel = document.querySelector("#godMode-btn");
@@ -13,7 +14,7 @@ const godModeLevel = document.querySelector("#godMode-btn");
 //setting the number of rows/columns for each difficulty
 const easy = 5;
 const medium = 7;
-const godMode = 8;
+const godMode = 15;
 
 // the gap between the blocks in one row:
 const gapRow = 10;
@@ -51,6 +52,8 @@ class Block {
 //a function that makes a number of blocks
 //based on the difficulty of the game.
 function listBlocks(diffculty) {
+  header.style.display = "none";
+
   //blocks in one row will have a gap of 10px between eachother
   //so the next block needs to shift in the x coordinates
   //by the width of the previous block + gap
@@ -102,7 +105,6 @@ function listBlocks(diffculty) {
         .getComputedStyle(container)
         .getPropertyValue("margin")
         .split("px");
-
       // making sure the user doesn't get beyond container's left and right walls
       if (
         touch.touches[0].clientX - 0.5 * blockWidth + 2 * gapColumn >
@@ -147,21 +149,22 @@ function listBlocks(diffculty) {
     collisions();
   }
 
-  timer = setInterval(moveBall, 15);
+  timer = setInterval(moveBall, 24);
 }
 
 // Event Listeners for the buttons
 easyLevel.addEventListener("click", () => {
   listBlocks(easy);
-  buttons.forEach((button) => (button.style.display = "none"));
+  buttons.style.display = "none";
 });
 mediumLevel.addEventListener("click", () => {
   listBlocks(medium);
-  buttons.forEach((button) => (button.style.display = "none"));
+  buttons.style.display = "none";
 });
 godModeLevel.addEventListener("click", () => {
   listBlocks(godMode);
-  buttons.forEach((button) => (button.style.display = "none"));
+  container.style.transform = "scale(0.6)";
+  buttons.style.display = "none";
 });
 
 // making a function that adds the blocks.
@@ -192,28 +195,29 @@ function addUser() {
 
 //moving the user with arrow keys
 function moveUserKey(event) {
+  event.preventDefault();
   switch (event.key) {
     case "ArrowLeft":
       if (currentPosition[0] - gapColumn > 0) {
-        currentPosition[0] -= 20;
+        currentPosition[0] -= 30;
         user.style.left = currentPosition[0] + "px";
       }
       break;
     case "ArrowRight":
       if (currentPosition[0] + blockWidth + gapColumn < containerWidth) {
-        currentPosition[0] += 20;
+        currentPosition[0] += 30;
         user.style.left = currentPosition[0] + "px";
       }
       break;
     case "ArrowUp":
       if (currentPosition[1] < 80) {
-        currentPosition[1] += 20;
+        currentPosition[1] += 30;
         user.style.bottom = currentPosition[1] + "px";
       }
       break;
     case "ArrowDown":
       if (currentPosition[1] > 20) {
-        currentPosition[1] -= 20;
+        currentPosition[1] -= 30;
         user.style.bottom = currentPosition[1] + "px";
       }
       break;

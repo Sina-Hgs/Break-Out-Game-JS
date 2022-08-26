@@ -1,30 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Silkscreen&display=swap");
 body {
   display: flex;
   flex-flow: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  background-color: rgb(11, 11, 11);
+  color: white;
+  font-family: "Bebas Neue", cursive;
+}
+
+h1 {
+  font-family: "Silkscreen", cursive;
+  text-align: center;
+  font-size: 3rem;
+  padding: 20px;
+  background-color: rgb(1, 15, 111);
+  border-style: solid;
+  border-width: 3px;
+  border-color: rgb(125, 125, 125);
+  box-shadow: 0px 0px 6px 1px rgb(104, 104, 104);
+  animation: border-glow 5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes border-glow {
+  0% {
+    border-color: rgb(125, 125, 125);
+    box-shadow: 0px 0px 5px 1px rgb(104, 104, 104);
+  }
+  25% {
+    border-color: rgb(169, 167, 167);
+    box-shadow: 0px 0px 5px 1px rgb(155, 155, 155);
+  }
+  50% {
+    border-color: rgb(233, 232, 232);
+    box-shadow: 0px 0px 7px 2px rgb(199, 199, 199);
+  }
+  75% {
+    border-color: rgb(169, 167, 167);
+    box-shadow: 0px 0px 5px 1px rgb(155, 155, 155);
+  }
+  100% {
+    border-color: rgb(125, 125, 125);
+    box-shadow: 0px 0px 5px 1px rgb(104, 104, 104);
+  }
 }
 
 .container {
   position: relative;
+  background-color: rgb(20, 19, 19);
   border-style: solid;
-  border-width: 25px;
-  border-color: darkblue;
+  border-width: 5px;
+  border-color: rgb(125, 125, 125);
+  box-shadow: 0px 0px 6px 1px rgb(104, 104, 104);
+  animation: border-glow 5s;
+  animation-iteration-count: infinite;
   width: 200px;
   height: 200px;
   margin: 100px;
-}
-
-.block {
-  position: absolute;
-  width: 120px;
-  height: 25px;
-  background-color: red;
-}
-
-.user {
-  position: absolute;
-  background-color: green;
 }
 
 .ball {
@@ -32,5 +65,77 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 20px;
-  background-color: rgb(4, 0, 128);
+  background-color: rgb(255, 255, 255);
+  border-color: rgb(125, 125, 125);
+  box-shadow: 0px 0px 6px 1px rgb(104, 104, 104);
+  animation: border-glow 5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes border-glow {
+  0% {
+    border-color: rgb(125, 125, 125);
+    box-shadow: 0px 0px 5px 1px rgb(104, 104, 104);
+  }
+  25% {
+    border-color: rgb(169, 167, 167);
+    box-shadow: 0px 0px 5px 1px rgb(155, 155, 155);
+  }
+  50% {
+    border-color: rgb(233, 232, 232);
+    box-shadow: 0px 0px 7px 5px rgb(199, 199, 199);
+  }
+  75% {
+    border-color: rgb(169, 167, 167);
+    box-shadow: 0px 0px 5px 1px rgb(155, 155, 155);
+  }
+  100% {
+    border-color: rgb(125, 125, 125);
+    box-shadow: 0px 0px 5px 1px rgb(104, 104, 104);
+  }
+}
+
+.block {
+  position: absolute;
+  width: 120px;
+  height: 25px;
+  background: rgb(254, 94, 7);
+  background: radial-gradient(circle, rgb(254, 94, 7) 20%, rgb(239, 85, 3) 93%);
+  box-shadow: 0px 0px 5px 1px rgb(0, 0, 0);
+}
+
+.user {
+  position: absolute;
+  background: rgb(2, 227, 223);
+  background: radial-gradient(
+    circle,
+    rgba(2, 227, 223, 1) 20%,
+    rgba(14, 148, 176, 1) 93%
+  );
+  box-shadow: 0px 0px 3px 2px rgb(3, 43, 56);
+}
+
+#buttons-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  cursor: pointer;
+  width: 120px;
+  height: 120px;
+  text-align: center;
+  font-family: "Bebas Neue", cursive;
+  font-size: 1.5rem;
+  padding: 20px;
+  background-color: rgb(255, 254, 254);
+  color: rgb(0, 0, 0);
+  border: solid rgb(11, 11, 11);
+}
+
+button:hover {
+  background-color: rgb(1, 15, 111);
+  color: rgb(255, 255, 255);
 }
