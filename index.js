@@ -11,9 +11,9 @@ const mediumLevel = document.querySelector("#medium-btn");
 const godModeLevel = document.querySelector("#godMode-btn");
 
 //setting the number of rows/columns for each difficulty
-const easy = 3;
-const medium = 4;
-const godMode = 9;
+const easy = 5;
+const medium = 7;
+const godMode = 8;
 
 // the gap between the blocks in one row:
 const gapRow = 10;
@@ -90,26 +90,36 @@ function listBlocks(diffculty) {
   document.addEventListener("keydown", moveUserKey);
 
   // moving user with touch
-
+  // The eventListener is added to the container instead of the user
+  // so the player can swip anywhere inside the playground and move the user block
+  // without having to keep his finger on the user block
   container.addEventListener(
     "touchmove",
     (touch) => {
       touch.preventDefault();
+      // getting the margin around container from the css file
       let containerMargin = window
         .getComputedStyle(container)
         .getPropertyValue("margin")
         .split("px");
-      console.log(containerMargin[0]);
+
+      // making sure the user doesn't get beyond container's left and right walls
       if (
         touch.touches[0].clientX - 0.5 * blockWidth + 2 * gapColumn >
           containerMargin[0] &&
         touch.touches[0].clientX <
-          containerWidth + 0.5 * blockWidth - 2 * gapColumn - 25 &&
-        touch.touches[0].clientY > containerHeight - 80 &&
-        touch.touches[0].clientY < containerHeight + 20
+          containerWidth + 0.5 * blockWidth - 2 * gapColumn - 25
       ) {
         currentPosition[0] = touch.touches[0].clientX - blockWidth;
         user.style.left = `${currentPosition[0]}px`;
+      }
+
+      // making sure the user doesn't get more than 80 pixels high or
+      // below the container's floor
+      if (
+        touch.touches[0].clientY > containerHeight - 80 &&
+        touch.touches[0].clientY < containerHeight + 20
+      ) {
         currentPosition[1] =
           containerHeight - touch.touches[0].clientY + blockHeight;
         user.style.bottom = `${currentPosition[1]}px`;
@@ -137,7 +147,7 @@ function listBlocks(diffculty) {
     collisions();
   }
 
-  timer = setInterval(moveBall, 25);
+  timer = setInterval(moveBall, 15);
 }
 
 // Event Listeners for the buttons
