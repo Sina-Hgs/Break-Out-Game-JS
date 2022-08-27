@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Silkscreen&display=swap");
 body {
+  text-align: center;
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -7,6 +8,7 @@ body {
   background-color: rgb(11, 11, 11);
   color: white;
   font-family: "Bebas Neue", cursive;
+  margin-top: 50px;
 }
 
 h1 {
@@ -57,7 +59,7 @@ h1 {
   animation-iteration-count: infinite;
   width: 200px;
   height: 200px;
-  margin: 100px;
+  margin: 70px;
 }
 
 .ball {
@@ -135,7 +137,12 @@ button {
   border: solid rgb(11, 11, 11);
 }
 
-button:hover {
+button:hover,
+button:focus {
   background-color: rgb(1, 15, 111);
   color: rgb(255, 255, 255);
+}
+
+#score {
+  margin: 20px;
 }

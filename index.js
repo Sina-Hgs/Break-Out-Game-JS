@@ -53,7 +53,7 @@ class Block {
 //based on the difficulty of the game.
 function listBlocks(diffculty) {
   header.style.display = "none";
-
+  scoreDisplay.innerHTML = `Your score: ${score}`;
   //blocks in one row will have a gap of 10px between eachother
   //so the next block needs to shift in the x coordinates
   //by the width of the previous block + gap
@@ -240,7 +240,7 @@ function collisions() {
       blockList.splice(i, 1);
       changeDirection();
       score++;
-      scoreDisplay.innerHTML = score;
+      scoreDisplay.innerHTML = `Your score: ${score}`;
       if (blockList.length == 0) {
         scoreDisplay.innerHTML = "You Win!";
         clearInterval(timer);
@@ -274,6 +274,7 @@ function collisions() {
     clearInterval(timer);
     scoreDisplay.innerHTML = "You lose!";
     document.removeEventListener("keydown", moveUserKey);
+    document.createElement("div");
   }
 }
 
