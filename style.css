@@ -1,30 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Silkscreen&display=swap");
+
+@import url("../node_modules/font-awesome/css/font-awesome.min.css");
+
+html {
+  font-size: 16px;
+}
+
 body {
+  text-align: center;
   display: flex;
   flex-flow: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  background-color: rgb(11, 11, 11);
+  color: white;
+  font-family: "Bebas Neue", sans-serif;
 }
 
+h1 {
+  cursor: default;
+  font-family: "Silkscreen", sans-serif;
+  text-align: center;
+  font-size: 3.5rem;
+  padding: 1rem;
+  background-color: rgb(1, 15, 111);
+  border-style: solid;
+  border-width: 3px;
+  border-color: rgb(125, 125, 125);
+  box-shadow: 0px 0px 6px 1px rgb(104, 104, 104);
+  animation: border-glow 5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes border-glow {
+  0% {
+    border-color: rgb(125, 125, 125);
+    box-shadow: 0px 0px 5px 1px rgb(104, 104, 104);
+  }
+  25% {
+    border-color: rgb(169, 167, 167);
+    box-shadow: 0px 0px 5px 1px rgb(155, 155, 155);
+  }
+  50% {
+    border-color: rgb(233, 232, 232);
+    box-shadow: 0px 0px 7px 2px rgb(199, 199, 199);
+  }
+  75% {
+    border-color: rgb(169, 167, 167);
+    box-shadow: 0px 0px 5px 1px rgb(155, 155, 155);
+  }
+  100% {
+    border-color: rgb(125, 125, 125);
+    box-shadow: 0px 0px 5px 1px rgb(104, 104, 104);
+  }
+}
+
+/* container aka game playground */
 .container {
   position: relative;
+  background-color: rgb(20, 19, 19);
   border-style: solid;
-  border-width: 25px;
-  border-color: darkblue;
-  width: 200px;
-  height: 200px;
-  margin: 100px;
+  border-width: 3px;
+  border-color: rgb(125, 125, 125);
+  box-shadow: 0px 0px 6px 1px rgb(104, 104, 104);
+  animation: border-glow 5s;
+  animation-iteration-count: infinite;
+  margin: 70px;
+  z-index: 1;
+  display: none;
 }
 
-.block {
+#godmode-container {
+  transform: scale(0.7);
   position: absolute;
-  width: 120px;
-  height: 25px;
-  background-color: red;
-}
-
-.user {
-  position: absolute;
-  background-color: green;
+  top: 10px;
 }
 
 .ball {
@@ -32,5 +81,276 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 20px;
-  background-color: rgb(4, 0, 128);
+  background-color: rgb(255, 255, 255);
+  border-color: rgb(125, 125, 125);
+  box-shadow: 0px 0px 6px 1px rgb(104, 104, 104);
+  animation: border-glow 5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes border-glow {
+  0% {
+    border-color: rgb(125, 125, 125);
+    box-shadow: 0px 0px 5px 1px rgb(104, 104, 104);
+  }
+  25% {
+    border-color: rgb(169, 167, 167);
+    box-shadow: 0px 0px 5px 1px rgb(155, 155, 155);
+  }
+  50% {
+    border-color: rgb(233, 232, 232);
+    box-shadow: 0px 0px 7px 5px rgb(199, 199, 199);
+  }
+  75% {
+    border-color: rgb(169, 167, 167);
+    box-shadow: 0px 0px 5px 1px rgb(155, 155, 155);
+  }
+  100% {
+    border-color: rgb(125, 125, 125);
+    box-shadow: 0px 0px 5px 1px rgb(104, 104, 104);
+  }
+}
+
+.block {
+  position: absolute;
+  width: 120px;
+  height: 25px;
+  background: rgb(254, 94, 7);
+  background: radial-gradient(circle, rgb(254, 94, 7) 20%, rgb(239, 85, 3) 93%);
+  box-shadow: 0px 0px 5px 1px rgb(0, 0, 0);
+}
+
+.user {
+  position: absolute;
+  background: rgb(2, 227, 223);
+  background: radial-gradient(
+    circle,
+    rgba(2, 227, 223, 1) 20%,
+    rgba(14, 148, 176, 1) 93%
+  );
+  box-shadow: 0px 0px 3px 2px rgb(3, 43, 56);
+}
+
+#how-to {
+  font-size: 1.5rem;
+}
+
+#buttons-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+button {
+  cursor: pointer;
+  width: 8rem;
+  height: 8rem;
+  text-align: center;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.5rem;
+  padding: 1rem;
+  background-color: rgb(255, 254, 254);
+  color: rgb(0, 0, 0);
+  border: solid rgb(11, 11, 11);
+}
+
+button:hover,
+button:focus {
+  background-color: rgb(1, 15, 111);
+  color: rgb(255, 255, 255);
+}
+
+.score {
+  width: 100%;
+  font-size: 1.5rem;
+}
+
+/* popup for winning/losing */
+.popup {
+  position: absolute;
+  top: 10%;
+  z-index: 2;
+  display: none;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 15rem;
+  height: 19rem;
+  padding: 3rem;
+  background-color: rgb(1, 15, 111);
+  border-style: solid;
+  border-width: 3px;
+  border-color: rgb(125, 125, 125);
+  box-shadow: 0px 0px 6px 1px rgb(104, 104, 104);
+  animation: border-glow 5s;
+  animation-iteration-count: infinite;
+}
+
+#game-result {
+  font-family: "Silkscreen", sans-serif;
+  font-size: 2rem;
+  margin-top: 0;
+  border-bottom: dotted white 3px;
+}
+
+#refresh-btn {
+  color: rgb(1, 15, 111);
+  width: 5rem;
+  height: 5rem;
+  border-style: solid;
+  border-radius: 10rem;
+  border-width: 3px;
+  border-color: rgb(125, 125, 125);
+}
+
+#refresh-btn:hover,
+#refresh-btn:focus {
+  background-color: rgb(104, 104, 104);
+  color: white;
+  outline: none;
+}
+
+/* footer */
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 80%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 1.5rem;
+  margin-top: 10px;
+  z-index: 0;
+}
+
+#name {
+  cursor: default;
+}
+
+a {
+  color: white;
+  font-size: 40px;
+}
+
+a:hover,
+a:focus {
+  transform: scale(1.5);
+  transition: 0.5s;
+}
+
+@media screen and (max-width: 990px) {
+  #godmode-container {
+    transform: scale(0.5);
+  }
+  #medium-container {
+    transform: scale(0.7);
+    position: absolute;
+    top: 10px;
+  }
+
+  body {
+    overflow-y: scroll;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  #godmode-container {
+    transform: scale(0.44);
+    top: -100px;
+  }
+  #medium-container {
+    transform: scale(0.6);
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  #how-to {
+    font-size: 1.2rem;
+  }
+
+  button {
+    font-size: 1.3rem;
+    width: 6rem;
+    height: 6rem;
+  }
+
+  #name {
+    font-size: 1.2rem;
+  }
+
+  footer {
+    width: 95%;
+  }
+}
+
+@media screen and (max-width: 570px) {
+  #godmode-container {
+    transform: scale(0.34);
+  }
+
+  #medium-container {
+    transform: scale(0.48);
+  }
+
+  .popup {
+    width: 7rem;
+    height: 11rem;
+  }
+  #game-result {
+    font-size: 1rem;
+  }
+  .popup > .score {
+    font-size: 1rem;
+  }
+  #refresh-btn {
+    width: 3.9rem;
+    height: 4rem;
+    transform: scale(0.7);
+  }
+}
+
+@media screen and (max-width: 450px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  #how-to {
+    font-size: 0.8rem;
+  }
+
+  #godmode-container {
+    transform: scale(0.25);
+  }
+
+  #medium-container {
+    transform: scale(0.4);
+  }
+
+  #easy-container {
+    transform: scale(0.7);
+  }
+
+  #name {
+    font-size: 0.8rem;
+  }
+}
+@media screen and (max-width: 380px) {
+  #godmode-container {
+    transform: scale(0.22);
+  }
+
+  #medium-container {
+    transform: scale(0.32);
+  }
+}
+
+@media screen and (max-height: 455px) {
+  footer {
+    position: relative;
+  }
 }

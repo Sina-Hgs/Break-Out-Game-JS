@@ -9,13 +9,41 @@
 </head>
 
 <body>
+    <header>
+        <h1>Breakout Game!</h1>
+    </header>
 
-    <div id="score"></div>
-    <button id="easy-btn">easy</button>
-    <button id="medium-btn">medium</button>
-    <button id="godMode-btn">GOD MODE!</button>
+    <div>
+        <p class="score">Choose a level:</p>
+        <div id="buttons-container">
+            <button id="easy-btn">Easy</button>
+            <button id="medium-btn">Medium</button>
+            <button id="godMode-btn">GOD MODE!</button>
+        </div>
+        <p id="how-to">
+            How to play<i class="fa fa-solid fa-question"></i>
+            <br>
+            Move the blue block with <span style="color:rgb(254, 94, 7)">arrow keys/touch</span style="color:red"> and
+            don't let the ball fall down.
+        </p>
+    </div>
     <div class="container">
     </div>
+    <div class="popup">
+        <i class="fa-solid fa-skull"></i>
+        <h2 id="game-result"></h2>
+        <p class="score"></p>
+        <p>Play again:</p>
+        <button id="refresh-btn" onClick="history.go(0)">
+            <i class="fa fa-solid fa-rotate-right"></i>
+        </button>
+
+    </div>
+    <footer>
+        <p id="name">Sina Haghshenas</p>
+        <a href="https://github.com/Sina-Hgs" target="_blank" rel="noopener noreferrer"> <i
+                class="fa fa-brands fa-github"></i></a>
+    </footer>
 
     <script src="index.js"></script>
 </body>

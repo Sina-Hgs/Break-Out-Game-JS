@@ -1,19 +1,25 @@
 //getting the container from our html file
 const container = document.querySelector(".container");
+const header = document.querySelector("header");
+const footer = document.querySelector("footer");
+const howToText = document.querySelector("#how-to");
+const popUp = document.querySelector(".popup");
 const blockWidth = 120;
 const blockHeight = 25;
-const scoreDisplay = document.querySelector("#score");
+const gameResult = document.querySelector("#game-result");
+const scoreDisplay = document.querySelectorAll(".score");
 let score = 0;
+
 // getting the buttons
-const buttons = document.querySelectorAll("button");
+const buttons = document.querySelector("#buttons-container");
 const easyLevel = document.querySelector("#easy-btn");
 const mediumLevel = document.querySelector("#medium-btn");
 const godModeLevel = document.querySelector("#godMode-btn");
 
 //setting the number of rows/columns for each difficulty
-const easy = 5;
+const easy = 3;
 const medium = 7;
-const godMode = 8;
+const godMode = 10;
 
 // the gap between the blocks in one row:
 const gapRow = 10;
@@ -51,6 +57,14 @@ class Block {
 //a function that makes a number of blocks
 //based on the difficulty of the game.
 function listBlocks(diffculty) {
+  header.style.display = "none";
+  howToText.remove();
+  scoreDisplay.forEach((i) => (i.innerHTML = `Your score: ${score}`));
+  footer.style.position = "absolute";
+  footer.style.top = "0";
+  container.style.display = "block";
+  container.style.marginTop = "0";
+
   //blocks in one row will have a gap of 10px between eachother
   //so the next block needs to shift in the x coordinates
   //by the width of the previous block + gap
@@ -61,13 +75,12 @@ function listBlocks(diffculty) {
   let yShift = blockHeight + gapColumn;
 
   //changing the container to fit the number of
-  //bloccontainerHeightks according to each game level.
-  container.style.width = diffculty * xShift + gapRow + "px";
-  container.style.height = diffculty * yShift + 10 * gapColumn;
-  //setting the width and height of the container to this variables
-  //so I can use them later.
+  //blocks  according to each game level.
   containerWidth = diffculty * xShift + gapRow;
   containerHeight = diffculty * yShift + 10 * gapColumn;
+  container.style.width = `${containerWidth}px`;
+  container.style.height = `${containerHeight}px`;
+
   for (let j = 0; j < diffculty; j++) {
     for (let k = 0; k < diffculty; k++) {
       blockList.push(new Block(10 + j * xShift, 10 + k * yShift));
@@ -97,16 +110,18 @@ function listBlocks(diffculty) {
     "touchmove",
     (touch) => {
       touch.preventDefault();
+
       // getting the margin around container from the css file
-      let containerMargin = window
+      let containerMarginArr = window
         .getComputedStyle(container)
-        .getPropertyValue("margin")
+        .getPropertyValue("margin-bottom")
         .split("px");
+      let containerMargin = parseInt(containerMarginArr[0]);
 
       // making sure the user doesn't get beyond container's left and right walls
       if (
-        touch.touches[0].clientX - 0.5 * blockWidth + 2 * gapColumn >
-          containerMargin[0] &&
+        touch.touches[0].clientX - 0.5 * blockWidth - 10 + gapColumn >
+          containerMargin &&
         touch.touches[0].clientX <
           containerWidth + 0.5 * blockWidth - 2 * gapColumn - 25
       ) {
@@ -116,6 +131,7 @@ function listBlocks(diffculty) {
 
       // making sure the user doesn't get more than 80 pixels high or
       // below the container's floor
+
       if (
         touch.touches[0].clientY > containerHeight - 80 &&
         touch.touches[0].clientY < containerHeight + 20
@@ -147,21 +163,24 @@ function listBlocks(diffculty) {
     collisions();
   }
 
-  timer = setInterval(moveBall, 15);
+  timer = setInterval(moveBall, 24);
 }
 
 // Event Listeners for the buttons
 easyLevel.addEventListener("click", () => {
   listBlocks(easy);
-  buttons.forEach((button) => (button.style.display = "none"));
+  container.setAttribute("id", "easy-container");
+  buttons.style.display = "none";
 });
 mediumLevel.addEventListener("click", () => {
   listBlocks(medium);
-  buttons.forEach((button) => (button.style.display = "none"));
+  container.setAttribute("id", "medium-container");
+  buttons.style.display = "none";
 });
 godModeLevel.addEventListener("click", () => {
   listBlocks(godMode);
-  buttons.forEach((button) => (button.style.display = "none"));
+  buttons.style.display = "none";
+  container.setAttribute("id", "godmode-container");
 });
 
 // making a function that adds the blocks.
@@ -192,28 +211,29 @@ function addUser() {
 
 //moving the user with arrow keys
 function moveUserKey(event) {
+  event.preventDefault();
   switch (event.key) {
     case "ArrowLeft":
       if (currentPosition[0] - gapColumn > 0) {
-        currentPosition[0] -= 20;
+        currentPosition[0] -= 30;
         user.style.left = currentPosition[0] + "px";
       }
       break;
     case "ArrowRight":
       if (currentPosition[0] + blockWidth + gapColumn < containerWidth) {
-        currentPosition[0] += 20;
+        currentPosition[0] += 30;
         user.style.left = currentPosition[0] + "px";
       }
       break;
     case "ArrowUp":
       if (currentPosition[1] < 80) {
-        currentPosition[1] += 20;
+        currentPosition[1] += 30;
         user.style.bottom = currentPosition[1] + "px";
       }
       break;
     case "ArrowDown":
       if (currentPosition[1] > 20) {
-        currentPosition[1] -= 20;
+        currentPosition[1] -= 30;
         user.style.bottom = currentPosition[1] + "px";
       }
       break;
@@ -236,11 +256,13 @@ function collisions() {
       blockList.splice(i, 1);
       changeDirection();
       score++;
-      scoreDisplay.innerHTML = score;
+      scoreDisplay.forEach((i) => (i.innerHTML = `Your score: ${score}`));
       if (blockList.length == 0) {
-        scoreDisplay.innerHTML = "You Win!";
+        popUp.style.display = "flex";
+        gameResult.innerHTML = "You Won!";
+        scoreDisplay[0].innerHTML = "You Won!";
+        scoreDisplay[1].innerHTML = `Your score: ${score}`;
         clearInterval(timer);
-        document.removeEventListener("keydown", moveUserKey);
       }
     }
   }
@@ -268,8 +290,11 @@ function collisions() {
   //checking for game over
   if (ballCurrentPosition[1] == 0) {
     clearInterval(timer);
-    scoreDisplay.innerHTML = "You lose!";
     document.removeEventListener("keydown", moveUserKey);
+    popUp.style.display = "flex";
+    gameResult.innerHTML = "You Lost...";
+    scoreDisplay[0].innerHTML = "GAME OVER";
+    scoreDisplay[1].innerHTML = `Your score: ${score}`;
   }
 }
 
