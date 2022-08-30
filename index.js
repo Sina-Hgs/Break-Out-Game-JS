@@ -60,6 +60,7 @@ function listBlocks(diffculty) {
   header.style.display = "none";
   howToText.remove();
   scoreDisplay.forEach((i) => (i.innerHTML = `Your score: ${score}`));
+  footer.style.position = "absolute";
   footer.style.top = "0";
   container.style.display = "block";
   container.style.marginTop = "0";

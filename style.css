@@ -14,12 +14,12 @@ body {
   justify-content: center;
   background-color: rgb(11, 11, 11);
   color: white;
-  font-family: "Bebas Neue", cursive;
+  font-family: "Bebas Neue", sans-serif;
 }
 
 h1 {
   cursor: default;
-  font-family: "Silkscreen", cursive;
+  font-family: "Silkscreen", sans-serif;
   text-align: center;
   font-size: 3.5rem;
   padding: 1rem;
@@ -148,7 +148,7 @@ button {
   width: 8rem;
   height: 8rem;
   text-align: center;
-  font-family: "Bebas Neue", cursive;
+  font-family: "Bebas Neue", sans-serif;
   font-size: 1.5rem;
   padding: 1rem;
   background-color: rgb(255, 254, 254);
@@ -189,7 +189,7 @@ button:focus {
 }
 
 #game-result {
-  font-family: "Silkscreen", cursive;
+  font-family: "Silkscreen", sans-serif;
   font-size: 2rem;
   margin-top: 0;
   border-bottom: dotted white 3px;
@@ -247,6 +247,8 @@ a:focus {
   }
   #medium-container {
     transform: scale(0.7);
+    position: absolute;
+    top: 10px;
   }
 
   body {
@@ -256,7 +258,8 @@ a:focus {
 
 @media screen and (max-width: 750px) {
   #godmode-container {
-    transform: scale(0.4);
+    transform: scale(0.44);
+    top: -100px;
   }
   #medium-container {
     transform: scale(0.6);
@@ -285,9 +288,13 @@ a:focus {
   }
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 570px) {
   #godmode-container {
-    transform: scale(0.3);
+    transform: scale(0.34);
+  }
+
+  #medium-container {
+    transform: scale(0.48);
   }
 
   .popup {
@@ -319,15 +326,31 @@ a:focus {
   #godmode-container {
     transform: scale(0.25);
   }
+
+  #medium-container {
+    transform: scale(0.4);
+  }
+
   #easy-container {
     transform: scale(0.7);
   }
 
-  footer {
-    position: relative;
-  }
-
   #name {
     font-size: 0.8rem;
+  }
+}
+@media screen and (max-width: 380px) {
+  #godmode-container {
+    transform: scale(0.22);
+  }
+
+  #medium-container {
+    transform: scale(0.32);
+  }
+}
+
+@media screen and (max-height: 455px) {
+  footer {
+    position: relative;
   }
 }
